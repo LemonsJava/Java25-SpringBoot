@@ -17,7 +17,7 @@ console.log(calculateFactorial(5));
 Bài 2: Viết function truyền vào 1 chuỗi. In ra chuỗi đảo ngược của chuỗi đó
 Ví dụ: reverseString(‘hello’) => olleh
  */
-
+let str = prompt('Enter a string: ');
 function reverseString(str) {
     let result = '';
     for (let i = str.length - 1; i >= 0; i--) {
@@ -25,7 +25,7 @@ function reverseString(str) {
     }
     return result;
 }
-console.log(reverseString('hello'));
+console.log(reverseString(str));
 
 
 
@@ -35,6 +35,8 @@ Ví dụ: translate(‘VN’) => “Xin chào”
 translate(‘EN’) => “Hello”
 Gợi ý : Sử dụng switch - case . Học viên tự nghĩ ra 1 vài mã quốc gia và câu chào tương ứng với quốc gia đó
 */
+
+let country = prompt('Enter your country (VN, EN, JP, KR, FR): ');
 function translate(country) {
     let message;
     switch (country) {
@@ -58,7 +60,7 @@ function translate(country) {
     }
     return message;
 }
-console.log(translate('FR'));
+console.log(translate(country));
 
 
 
@@ -66,7 +68,7 @@ console.log(translate('FR'));
 /*Bài 4: Cho function truyền vào 1 chuỗi dài hơn 15 ký tự. Viết 1 function cắt chuỗi, lấy ra 10 ký tự đầu tiên và thêm vào dấu “…” ở cuối chuỗi.
 Ví dụ : subString(“xinchaocacbandenvoiTechmaster”) => “xinchaocac…”
 */
-
+let str2 = prompt('Enter a string: ');
 function subString(str) {
     let result = '';
     for (let i = 0; i < 10; i++) {
@@ -74,4 +76,4 @@ function subString(str) {
     }
     return result + '...';
 }
-console.log(subString('xinchaocacbandenvoiTechmaster'));
+console.log(subString(str2));
