@@ -31,3 +31,5 @@
 + ele.classList.toggle -> add/remove class
 + ele.classList.contains -> check class
 + ele.classList.replace -> replace class
+
+- Lợi ích của addEventListener: có thể thêm nhiều sự kiện cho cùng một phần tử.
