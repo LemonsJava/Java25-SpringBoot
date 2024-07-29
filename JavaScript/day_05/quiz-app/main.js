@@ -81,7 +81,6 @@ btnNextQuestion.addEventListener("click", () => {
 });
 
 // Thong bao ket qua
-
 btnFinish.addEventListener("click", () => {
   if (checkAnswer()) {
     alert(`Ban da tra loi dung ${counterAnswer}/${questions.length} cau`);
