@@ -23,7 +23,7 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
-let score = 0;
+let counterAnswer = 0;
 
 const btnNextQuestion = document.querySelector("#btn-next");
 const btnFinish = document.querySelector("#btn-finish");
@@ -58,13 +58,12 @@ const renderQuestion = () => {
 
 // Kiem tra dap an
 const checkAnswer = () => {
-  const correctAnswer = questions[currentQuestionIndex].answer;
+  const correctAnswer = String(questions[currentQuestionIndex].answer);
   const selectedChoice = document.querySelector('input[name="choice"]:checked');
-  console.log(selectedChoice);
   if (selectedChoice) {
     const selectAnswer = selectedChoice.value;
     if (selectAnswer === correctAnswer) {
-      score++;
+      counterAnswer++;
     }
     return true; // Da chon cau tra loi
   }
@@ -85,7 +84,7 @@ btnNextQuestion.addEventListener("click", () => {
 
 btnFinish.addEventListener("click", () => {
   if (checkAnswer()) {
-    alert(`Ban da tra loi dung ${score}/${questions.length} cau`);
+    alert(`Ban da tra loi dung ${counterAnswer}/${questions.length} cau`);
     window.location.reload();
   } else {
     alert("Ban chua chon dap an");
