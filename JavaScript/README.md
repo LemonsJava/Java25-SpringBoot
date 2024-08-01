@@ -34,6 +34,13 @@
 
 - Lợi ích của addEventListener: có thể thêm nhiều sự kiện cho cùng một phần tử.
 
+- JSON: JavaScript Object Notation là một kiểu định dạng dữ liệu (chuỗi)
+- JSON: Number, String, Boolean, Null, Array, Object
+- JSON.stringify: JS types -> JSON
+- JSON.parse: JSON -> JS types
+
+- Promise:
+
 <!-- API - Application Programming Interface -->
 
 - Giao dien lap trinh ung dung => bo quy tac cho phep cac ung dung/ he thong giao tiep/ trao doi va lam viec voi nhau
