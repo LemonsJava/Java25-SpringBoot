@@ -22,13 +22,13 @@
   "todo-list": [
     {
       "title": "Đi chơi với bạn bè",
-      "status": true,
+      "status": false,
       "id": 1
     },
     {
       "id": 2,
       "title": "Chơi cầu lông",
-      "status": true
+      "status": false
     },
     {
       "id": 3,
@@ -42,7 +42,7 @@
     },
     {
       "title": "Nấu bữa tối",
-      "status": false,
+      "status": true,
       "id": 5
     },
     {
