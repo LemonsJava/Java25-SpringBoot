@@ -28,7 +28,7 @@
     {
       "id": 2,
       "title": "Chơi cầu lông",
-      "status": false
+      "status": true
     },
     {
       "id": 3,
@@ -37,12 +37,12 @@
     },
     {
       "title": "Đi chơi với bạn gái",
-      "status": true,
+      "status": false,
       "id": 4
     },
     {
       "title": "Nấu bữa tối",
-      "status": true,
+      "status": false,
       "id": 5
     },
     {

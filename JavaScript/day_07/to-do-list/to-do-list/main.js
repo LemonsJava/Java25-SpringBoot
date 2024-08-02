@@ -158,5 +158,5 @@ btnSearch.addEventListener("click", async () => {
   }
 });
 
-// Hien thi todos ra ngoai giao dien khi load trang
+// Hien thi todo-list ra ngoai giao dien khi load trang
 getAllTodos();
