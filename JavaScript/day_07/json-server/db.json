@@ -28,12 +28,12 @@
     {
       "id": 2,
       "title": "Chơi cầu lông",
-      "status": true
+      "status": false
     },
     {
       "id": 3,
       "title": "Làm BTVN",
-      "status": true
+      "status": false
     },
     {
       "title": "Đi chơi với bạn gái",
