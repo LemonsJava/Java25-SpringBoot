@@ -112,7 +112,6 @@ const editTodo = async (id) => {
     title: newTodo,
     status: todo.status,
   };
-
   try {
     let response = await axios.patch(`${apiUrl}/${id}`, data);
     todo.title = response.data.title;
@@ -157,6 +156,5 @@ btnSearch.addEventListener("click", async () => {
     console.log(error);
   }
 });
-
 // Hien thi todo-list ra ngoai giao dien khi load trang
 getAllTodos();
