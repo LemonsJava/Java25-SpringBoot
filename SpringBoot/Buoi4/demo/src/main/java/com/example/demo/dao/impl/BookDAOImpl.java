@@ -3,7 +3,6 @@ package com.example.demo.dao.impl;
 import com.example.demo.dao.BookDAO;
 import com.example.demo.database.BookDB;
 import com.example.demo.model.Book;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Repository;
 
@@ -12,35 +11,51 @@ public class BookDAOImpl implements BookDAO {
 
   @Override
   public Book findById(int id) {
-    for (Book book : BookDB.books) { //SELECT * FROM books WHERE id = ?
-      if (book.getId() == id) {
-        return book;
-      }
-    }
-    return null;
+//    for (Book book : BookDB.books) { //SELECT * FROM books WHERE id = ?
+//      if (book.getId() == id) {
+//        return book;
+//      }
+//    }
+//    return null;
+
+    // Stream API
+    return BookDB.books.stream()
+        .filter(book -> book.getId() == id)
+        .findFirst()
+        .orElse(null);
   }
 
   @Override
   public List<Book> findByTitleContainIgnoreCase(
       String keyword) { //SQL: SELECT * FROM books WHERE title LIKE '%keyword%'
-    List<Book> result = new ArrayList<>();
-    for (Book book : BookDB.books) {
-      if (book.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
-        result.add(book);
-      }
-    }
-    return result;
+//    List<Book> result = new ArrayList<>();
+//    for (Book book : BookDB.books) {
+//      if (book.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+//        result.add(book);
+//      }
+//    }
+//    return result;
+
+    // Stream API
+    return BookDB.books.stream()
+        .filter(book -> book.getTitle().toLowerCase().contains(keyword.toLowerCase()))
+        .toList();
   }
 
   @Override
   public List<Book> findByYearBetween(int fromYear, int toYear) {
-    List<Book> result = new ArrayList<>();
-    for (Book book : BookDB.books) {
-      if (book.getYear() >= fromYear && book.getYear() <= toYear) {
-        result.add(book);
-      }
-    }
-    return result;
+//    List<Book> result = new ArrayList<>();
+//    for (Book book : BookDB.books) {
+//      if (book.getYear() >= fromYear && book.getYear() <= toYear) {
+//        result.add(book);
+//      }
+//    }
+//    return result;
+
+    // Stream API
+    return BookDB.books.stream()
+        .filter(book -> book.getYear() >= fromYear && book.getYear() <= toYear)
+        .toList();
   }
 
   @Override

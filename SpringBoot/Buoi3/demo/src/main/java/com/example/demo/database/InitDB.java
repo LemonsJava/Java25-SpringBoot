@@ -10,14 +10,14 @@ import org.springframework.stereotype.Component;
 public class InitDB implements CommandLineRunner {
 
   @Autowired
-  @Qualifier("CSVFileReader")
+  @Qualifier("EXCELFileReader")
   private IFileReader fileReader;
 
 
   @Override
   public void run(String... args) {
     System.out.println("Doc du lieu tu file");
-    BookDB.books = fileReader.readFile("books.csv");
+    BookDB.books = fileReader.readFile("books.xlsx");
     System.out.println("Tong so sach trong file la: " + BookDB.books.size());
   }
 }
