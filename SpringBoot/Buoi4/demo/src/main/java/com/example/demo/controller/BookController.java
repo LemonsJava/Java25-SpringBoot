@@ -28,7 +28,7 @@ public class BookController {
   // Lay danh sach tat ca book
   @GetMapping  //GET: https://localhost:8080/books
   public ResponseEntity<List<Book>> getAllBook() {
-    List<Book> books = bookService.getAllBooks();
+    List<Book> books = bookService.getAllBooks();Con
     return new ResponseEntity<>(books, HttpStatus.OK);
   }
 

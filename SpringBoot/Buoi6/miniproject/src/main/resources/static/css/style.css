@@ -1,0 +1,152 @@
+/* style.css */
+
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 36px;
+  color: #007bff;
+}
+
+h2 {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 24px;
+  color: #333333;
+}
+
+a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.sort-by-price {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.sort-by-price a {
+  font-size: 18px;
+  color: #007bff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sort-by-price a:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.product-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.product-info {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: calc(25% - 20px); /* Chiếm khoảng 1/4 của hàng với khoảng cách */
+  box-sizing: border-box;
+}
+
+.product-info:hover {
+  transform: translateY(-10px);
+}
+
+.product-image img {
+  width: 100%;
+  height: auto; /* Đảm bảo ảnh không bị co giãn */
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.product-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  padding: 10px;
+  text-align: center;
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+.price-discount {
+  color: #dc3545;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.product-price {
+  font-size: 22px;
+  color: #6c757d;
+}
+
+.product-rating {
+  text-align: center;
+  padding: 10px;
+  font-size: 18px;
+  color: #ffc107;
+}
+
+.ui-button {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 30px 0 20px;
+}
+
+.ui-button button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #007bff;
+  color: #ffffff;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ui-button button:hover {
+  background-color: #0056b3;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+.ui-button button:hover a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.ui-button button a {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.ui-button .current-button {
+  background-color: #007bff;
+  color: #ffffff;
+}
+
+.ui-button .current-button a {
+  color: #ffffff;
+}
