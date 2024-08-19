@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+
+</head>
+<body>
+<h1>Blog Page</h1>
+<p>
+  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio eum excepturi explicabo
+  maiores minima perferendis recusandae sapiente soluta ullam voluptates.
+</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Distinctio, sunt!</p>
+<!--Book information-->
+<p th:text="${book.id}"></p>
+<p th:text="${book.title}"></p>
+<p th:text="${book.author}"></p>
+<p th:text="${book.year}"></p>
+
+<!--JS-->
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>
