@@ -32,7 +32,7 @@ public class ProductDAOImlp implements ProductDAO {
   @Override
   public List<Product> sortByPrice() {
     return ProductDataBase.products.stream()
-        .sorted((p1, p2) -> (int) (p1.getPrice() - p2.getPrice()))
+        .sorted((p1, p2) -> (int) (p2.getPrice() - p1.getPrice()))
         .toList();
   }
 }
