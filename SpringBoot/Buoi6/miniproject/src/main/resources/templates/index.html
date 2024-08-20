@@ -59,7 +59,7 @@
           th:each="number : ${#numbers.sequence(1, products.getTotalPages())}"
           th:styleappend="${products.getCurrentPage() == number} ? 'background-color: yellow;' : ''">
     <a th:href="|/products?page=${number}|" th:text="${number}"
-       th:styleappend="${products.getCurrentPage() == number} ? 'color: black;' : ''">1</a>
+       th:styleappend="${products.getCurrentPage() == number} ? 'color: black; font-size: 20px;' : ''">1</a>
   </button>
 
   <!-- Nút 'Trang sau' -->

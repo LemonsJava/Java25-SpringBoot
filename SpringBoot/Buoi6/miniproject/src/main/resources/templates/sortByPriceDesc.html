@@ -57,7 +57,7 @@
           th:each="number : ${#numbers.sequence(1, sortedByPriceDesc.getTotalPages())}"
           th:styleappend="${sortedByPriceDesc.getCurrentPage() == number} ? 'background-color: yellow;' : ''">
     <a th:href="|/products/sortByPriceDesc?page=${number}|" th:text="${number}"
-       th:styleappend="${sortedByPriceDesc.getCurrentPage() == number} ? 'color: black;' : ''">1</a>
+       th:styleappend="${sortedByPriceDesc.getCurrentPage() == number} ? 'color: black; font-size: 20px;' : ''">1</a>
   </button>
 
   <!-- Nút 'Trang sau' -->
