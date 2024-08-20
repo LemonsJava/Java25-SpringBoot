@@ -1,4 +1,8 @@
-/* style.css */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 body {
   font-family: 'Arial', sans-serif;
@@ -27,6 +31,51 @@ a {
   color: #007bff;
 }
 
+.search-by-keyword {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.search-by-keyword input {
+  width: 300px;
+  padding: 10px;
+  border: 2px solid #007bff;
+  border-radius: 5px 0 0 5px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-by-keyword input:focus {
+  border-color: #0056b3;
+}
+
+.search-by-keyword button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  color: #fff;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.search-by-keyword button:hover {
+  background-color: #0056b3;
+}
+
+.search-by-keyword button i {
+  font-size: 18px;
+}
+
+.search-by-keyword button:focus {
+  outline: none;
+}
+
+
 .sort-by-price {
   text-align: center;
   margin-bottom: 20px;
@@ -51,7 +100,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-between;
+  justify-content: center;
   padding: 20px;
 }
 

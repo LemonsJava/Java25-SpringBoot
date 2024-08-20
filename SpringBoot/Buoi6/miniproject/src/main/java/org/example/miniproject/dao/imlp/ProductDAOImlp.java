@@ -25,7 +25,7 @@ public class ProductDAOImlp implements ProductDAO {
   @Override
   public List<Product> findByDescription(String keyword) {
     return ProductDataBase.products.stream()
-        .filter(product -> product.getDescription().toLowerCase().contains(keyword.toLowerCase()))
+        .filter(product -> product.getName().toLowerCase().contains(keyword.toLowerCase()))
         .toList();
   }
 

@@ -42,15 +42,21 @@ public class ProductController {
   //Tim kiem sp theo mo ta -> http://localhost:8080/products/search?keyword=abc
   @GetMapping("/products/search")
   public String findProductByDescription(Model model,
-      @RequestParam(required = false) String keyword) {
+      @RequestParam(required = false) String keyword,
+      @RequestParam(required = false, defaultValue = "1") int page,
+      @RequestParam(required = false, defaultValue = "12") int size) {
     List<Product> listProduct;
     if (keyword != null) {
       listProduct = productService.findProductByDescription(keyword);
     } else {
       listProduct = productService.getAllProduct();
     }
-
-    model.addAttribute("products", listProduct);
+    IPageResponse<Product> pageResponse = PageResponseImlp.<Product>builder()
+        .currentPage(page)
+        .pageSize(size)
+        .content(listProduct)
+        .build();
+    model.addAttribute("productsSearchResult", pageResponse);
     return "searchResult";
   }
 

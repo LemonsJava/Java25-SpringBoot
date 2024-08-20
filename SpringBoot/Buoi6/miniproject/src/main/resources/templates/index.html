@@ -11,6 +11,13 @@
 <body>
 <h1>Danh sách sản phẩm</h1>
 
+<form class="search-by-keyword" th:action="@{/products/search}">
+  <input type="text" name="keyword" placeholder="Tìm kiếm sản phẩm...">
+  <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+</form>
+
+<br>
+
 <div class="sort-by-price">
   <a th:href="@{/products/sortByPriceDesc}"><i class="fa-solid fa-filter"></i> Sắp xếp theo giá
     giảm
