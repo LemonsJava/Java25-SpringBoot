@@ -12,7 +12,7 @@
   <a th:href="@{/products}">Trang chủ</a>
 </h1>
 
-<h2 class="d-flex justify-content-center">Danh sách sản phẩm sắp xếp theo giá giảm dần</h2>
+<h2>Danh sách sản phẩm sắp xếp theo giá giảm dần</h2>
 
 <div class="product-container">
   <div th:each="product : ${sortedByPriceDesc.getContent()}" class="product-info">
@@ -31,7 +31,7 @@
         </div>
         <!-- Giá gốc sẽ bị gạch ngang nếu có giá giảm -->
         <div
-            th:style="${product.getPriceDiscount()} > 0 ? 'text-decoration: line-through; color: #999; font-size: 18px; margin-left: 20px' : ''"
+            th:style="${product.getPriceDiscount()} > 0 ? 'text-decoration: line-through; color: #999; font-size: 18px; margin-left: 20px;' : ''"
             class="product-price">
           <th:block th:text="${product.getPrice()}"></th:block>
           <i class="fa-solid fa-dollar-sign"></i>
