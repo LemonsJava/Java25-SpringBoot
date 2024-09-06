@@ -14,8 +14,9 @@ header .Logo-motchill {
 
 .movie-poster img {
     width: 100%;
-    height: 250px;
+    height: 400px;
     object-fit: cover;
+    transition: all 0.3s ease-in-out;
 }
 
 footer .Logo-motchill {
@@ -63,4 +64,23 @@ footer .Logo-motchill {
 
 .pagination li a {
     border-radius: 5px;
+}
+
+.movie-poster {
+    position: relative;
+    display: inline-block;
+}
+
+.play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border-radius: 50%;
+    padding: 10px;
+    font-size: 30px;
+    cursor: pointer;
+    z-index: 1;
 }

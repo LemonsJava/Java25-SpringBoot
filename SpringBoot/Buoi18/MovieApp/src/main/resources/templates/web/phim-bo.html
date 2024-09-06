@@ -76,7 +76,7 @@
 
         <div class="row">
             <div class="col-2" th:each="movie : ${pageDataPhimBo.getContent()}">
-                <a th:href="|/phim-bo/${movie.slug}|" class="movie-item text-black text-decoration-none">
+                <a th:href="|/phim/${movie.id}/${movie.slug}|" class="movie-item text-black text-decoration-none">
                     <div class="movie-poster rounded overflow-hidden">
                         <img th:src="${movie.poster}" th:alt="${movie.name}">
                     </div>

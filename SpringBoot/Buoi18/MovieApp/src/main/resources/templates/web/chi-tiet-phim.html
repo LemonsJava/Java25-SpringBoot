@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Trang chi tiết phim</title>
+    <!-- CSS bootstrap -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+            crossorigin="anonymous"
+    />
+    <!-- CSS FontAwesome -->
+    <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+            integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+    />
+    <!-- CSS myStyle -->
+    <link rel="stylesheet" th:href="@{/web-assets/css/style.css}"/>
+</head>
+<body>
+<!-- Header -->
+<header class="bg-dark">
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/home}">
+                <img
+                        src="https://motchilltv.io/logo_motchill.png"
+                        alt=""
+                        class="Logo-motchill"
+                />
+            </a>
+            <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div
+                    class="collapse navbar-collapse justify-content-between"
+                    id="navbarNavAltMarkup"
+            >
+                <div class="navbar-nav">
+                    <a class="nav-link active text-white" th:href="@{/home}">Trang chủ</a>
+                    <a class="nav-link text-white" th:href="@{/phim-bo}">Phim bộ</a>
+                    <a class="nav-link text-white" th:href="@{/phim-le}">Phim lẻ</a>
+                    <a class="nav-link text-white" th:href="@{/phim-chieu-rap}">Phim chiếu rạp</a>
+                    <a class="nav-link text-white" href="#">Quốc gia</a>
+                    <a class="nav-link text-white" href="#">Thể loại</a>
+                    <a class="nav-link text-white" href="#">Mua phim</a>
+                </div>
+                <div>
+                    <a href="#" class="text-white text-decoration-none">Đăng nhập</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<section class="py-4">
+    <div class="container">
+        <!-- Thông tin chi tiết phim -->
+        <div class="mb-3">
+          <span>
+            <a th:href="@{/home}" class="text-decoration-none">Trang chủ</a>
+            /
+            <a th:href="@{/phim-chieu-rap}" class="text-decoration-none">Phim chiếu rạp</a>
+              / <span th:text="${movieDetail.name}">nDeadpool Và Wolverine</span>
+          </span>
+        </div>
+
+        <div class="movie-info d-flex">
+            <div class="movie-poster overflow-hidden position-relative rounded"
+                 data-bs-toggle="modal" data-bs-target="#modal-trailer">
+                <img
+                        id="movie-poster"
+                        class="w-100"
+                        th:src="${movieDetail.poster}"
+                        th:alt="${movieDetail.name}"
+                >
+            </div>
+            <div class="modal fade" id="modal-trailer" tabindex="-1" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Trailer</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#my-modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <iframe id="video-trailer" style="aspect-ratio: 16 / 9" width="100%"
+                                    src="https://www.youtube.com/embed/MjxPoqCvvVs?si=O86GBpvOpevCw1sa"
+                                    title="YouTube video player" frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ms-3">
+                <div class="d-flex align-items-center">
+                    <h4 class="me-2 mb-0" th:text="${movieDetail.name}">Deadpool Và Wolverine</h4>
+                    <span class="text-weight-bold fs-5 me-1" th:text="${movieDetail.rating}">9.8</span>
+                    <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+                </div>
+                <div class="bg-body-tertiary mt-3">
+                    <table class="info-table">
+                        <tr>
+                            <td>Thể loại</td>
+                            <td>Hành Động, Hài Hước, Phiêu Lưu</td>
+                        </tr>
+                        <tr>
+                            <td>Năm sản xuất</td>
+                            <td th:text="${movieDetail.getPublishedAt()}">2024</td>
+                        </tr>
+                        <tr>
+                            <td>Quốc gia</td>
+                            <td>Mỹ</td>
+                        </tr>
+                        <tr>
+                            <td>Đạo diễn</td>
+                            <td>Shawn Levy</td>
+                        </tr>
+                        <tr>
+                            <td>Diễn viên</td>
+                            <td>
+                                Ryan Reynolds, Emma Corrin, Hugf Jackman, Mathew Macfadyen,
+                                Chris Evans, Henry Cavill
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nội dung phim</td>
+                            <td th:text="${movieDetail.getDescription()}">
+                                Deadpool Và Wolverine kể về Wade Wilson (Ryan Reynolds),
+                                người đang vật lộn với cuộc sống bình thường sau khi những
+                                ngày tháng làm lính đánh thuê đầy đạo đức, Deadpool, đã kết
+                                thúc. Tuy nhiên, khi quê hương anh đối mặt với một mối đe
+                                dọa nghiêm trọng, Wade phải miễn cưỡng trở lại vai trò
+                                Deadpool, cùng với Wolverine, người còn miễn cưỡng hơn cả
+                                anh.
+                                <a href="#">Xem thêm</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <button type="button" class="btn btn-danger">
+                    <i class="fa-solid fa-play" style="color: #ffffff"></i>
+                    <span class="ms-1">Xem phim</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Phim đề xuất -->
+        <section class="mt-4 py-3 bg-body-tertiary">
+            <div class="container">
+                <div class="mb-2 d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0">Phim đề xuất</h3>
+                </div>
+
+                <div class="row">
+                    <div class="col-2" th:each="movie : ${listMovieSuggestion}">
+                        <a href="#" class="movie-item text-black text-decoration-none">
+                            <div class="movie-poster rounded overflow-hidden">
+                                <img
+                                        th:src="${movie.poster}"
+                                        th:alt="${movie.name}"
+                                />
+                            </div>
+                            <div class="movie-info">
+                                <p class="mt-2" th:text="${movie.name}">Love Next Door</p>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- Bình luận -->
+        <div class="mt-4 ms-5">
+            <div>
+                <h5>Bình luận</h5>
+            </div>
+            <div>
+                <p>
+                    Vui lòng <a href="#" class="text-decoration-none">đăng nhập</a> để
+                    viết bình luận.
+                </p>
+            </div>
+            <div>
+                <div class="container mt-3">
+                    <div class="d-flex align-items-start">
+                        <div class="profile-circle">D</div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">
+                                Lê Hải Dũng <small class="text-muted"
+                                                   th:text="${#temporals.format(movieDetail.getPublishedAt(),'dd/MM/yyyy')}">20/08/2024</small>
+                            </h6>
+                            <p class="mb-0">
+                    <span
+                    ><i class="fa-solid fa-star" style="color: #ffd43b"></i
+                    ></span>
+                                <strong>10/10</strong> Xuất sắc
+                            </p>
+                            <p class="text-muted">nhạt như nước ốc</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-3">
+                    <div class="d-flex align-items-start">
+                        <div class="profile-circle">D</div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">
+                                Lê Hải Dũng <small class="text-muted">10/08/2024</small>
+                            </h6>
+                            <p class="mb-0">
+                    <span
+                    ><i class="fa-solid fa-star" style="color: #ffd43b"></i
+                    ></span>
+                                <strong>9/10</strong> Xuất sắc
+                            </p>
+                            <p class="text-muted">phim hay</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="container mt-3">
+                    <div class="d-flex align-items-start">
+                        <div class="profile-circle">D</div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">
+                                Lê Hải Dũng <small class="text-muted">12/05/2024</small>
+                            </h6>
+                            <p class="mb-0">
+                    <span
+                    ><i class="fa-solid fa-star" style="color: #ffd43b"></i
+                    ></span>
+                                <strong>10/10</strong> Xuất sắc
+                            </p>
+                            <p class="text-muted">tuyệt vời</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Footer -->
+<footer class="bg-dark py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <img
+                        src="https://motchilltv.io/logo_motchill.png"
+                        alt=""
+                        class="Logo-motchill"
+                />
+                <p class="text-white mt-3">
+                    Motchill - Xem phim online vietsub chất lượng cao miễn phí, nhiều
+                    thể loại phim phong phú, đặc sắc, giao diện trực quan, thuận tiện,
+                    tốc độ tải nhanh, thường xuyên cập nhật các phim mới.
+                </p>
+            </div>
+            <div class="col">
+                <h5 class="text-uppercase text-white mb-3">Danh mục</h5>
+                <ul class="p-0">
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white">Phim Mới</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white">Phim Bộ</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white">Phim Lẻ</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white"
+                        >Phim Chiếu Rạp</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5 class="text-uppercase text-white mb-3">Thể loại</h5>
+                <ul class="p-0">
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white"
+                        >Phim Cổ Trang</a
+                        >
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white"
+                        >Phim Đam Mỹ</a
+                        >
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white"
+                        >Phim Bách Hợp</a
+                        >
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white"
+                        >Phim Viễn Tưởng</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5 class="text-uppercase text-white mb-3">Điều khoản</h5>
+                <ul class="p-0">
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white">DMCA</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white">Liên Hệ</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white">Privacy</a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none text-white"
+                        >Terms of Service</a
+                        >
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5 class="text-uppercase text-white mb-3">Social</h5>
+                <div class="fs-3">
+                    <a href="" class="text-decoration-none">
+                        <i
+                                class="fa-brands fa-square-facebook"
+                                style="color: #0a5ae6"
+                        ></i>
+                    </a>
+                    <a href="#" class="text-decoration-none">
+                        <i
+                                class="fa-brands fa-square-twitter"
+                                style="color: #74c0fc"
+                        ></i>
+                    </a>
+                    <a href="#" class="text-decoration-none">
+                        <i class="fa-brands fa-youtube" style="color: #f90101"></i
+                        ></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--my JS-->
+<script th:src="@{/web-assets/js/main.js}"></script>
+<!-- JS bootstrap -->
+<script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"
+></script>
+</body>
+</html>

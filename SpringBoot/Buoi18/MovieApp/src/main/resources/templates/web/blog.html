@@ -78,7 +78,7 @@
                 <div class="bg-body-tertiary rounded">
                     <a th:href="|/tin-tuc/${blog.slug}|" class="d-block text-black text-decoration-none p-4">
                         <h5 th:text="${blog.title}">Những bộ phim chủ đề Trò chơi đỉnh cao</h5>
-                        <p th:text="${blog.createdAt}">26/08/2024</p>
+                        <p th:text="${#temporals.format(blog.publishedAt,'dd/MM/yyyy')}">26/08/2024</p>
                         <p class="mb-0" th:text="${blog.content}">Bạn đam mê những Game đầy gay cấn kịch tính, hôm nay
                             Ví MoMo xin mang đến 10 bộ
                             phim đặc sắc về chủ đề Trò chơi.</p>

@@ -19,4 +19,8 @@ public class BlogService {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
         return blogRepository.findByStatus(status, pageable);
     }
+
+    public Blog getBlogDetail(Integer id, String slug) {
+        return blogRepository.findByIdAndSlugAndStatus(id, slug, true).orElse(null);
+    }
 }

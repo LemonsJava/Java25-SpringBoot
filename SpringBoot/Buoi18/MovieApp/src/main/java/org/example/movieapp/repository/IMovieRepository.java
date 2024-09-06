@@ -7,6 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IMovieRepository extends JpaRepository<Movie, Integer> {
 
@@ -31,12 +32,19 @@ public interface IMovieRepository extends JpaRepository<Movie, Integer> {
     List<Movie> findTop5ByTypeAndStatusOrderByCreatedAtDescRatingAsc(MovieType type,
                                                                      Boolean status);
 
-
     //Ung dung MovieApp
 
     Page<Movie> findByTypeAndStatus(MovieType type, Boolean status, Pageable pageable);
 
     Page<Movie> findByStatus(Boolean status, Pageable pageable);
+
+    //Chi tiet phim
+
+    Optional<Movie> findByIdAndSlugAndStatus(Integer id, String slug, Boolean status);
+
+    //Phim de xuat
+
+    List<Movie> findByIdAndTypeAndStatus(Integer id, MovieType type, Boolean status);
 
 
 }

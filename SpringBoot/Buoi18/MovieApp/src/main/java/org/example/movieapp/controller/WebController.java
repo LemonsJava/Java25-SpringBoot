@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
@@ -18,15 +19,19 @@ import java.util.List;
 @RequiredArgsConstructor
 
 public class WebController {
+
     private final MovieService movieService;
     private final BlogService blogService;
 
     @GetMapping("/home")
     public String getHomePage(Model model) {
         List<Movie> listPhimHot = movieService.getMovieByStatus(true, 1, 4).getContent();
-        List<Movie> listPhimBo = movieService.getMovieByType(MovieType.PHIM_BO, true, 1, 6).getContent();
-        List<Movie> listPhimLe = movieService.getMovieByType(MovieType.PHIM_LE, true, 1, 6).getContent();
-        List<Movie> listPhimChieuRap = movieService.getMovieByType(MovieType.PHIM_CHIEU_RAP, true, 1, 6).getContent();
+        List<Movie> listPhimBo = movieService.getMovieByType(MovieType.PHIM_BO, true, 1, 6)
+                .getContent();
+        List<Movie> listPhimLe = movieService.getMovieByType(MovieType.PHIM_LE, true, 1, 6)
+                .getContent();
+        List<Movie> listPhimChieuRap = movieService.getMovieByType(MovieType.PHIM_CHIEU_RAP, true, 1, 6)
+                .getContent();
         List<Blog> listBlog = blogService.getBlogByStatus(true, 1, 4).getContent();
         model.addAttribute("listPhimHot", listPhimHot);
         model.addAttribute("listPhimBo", listPhimBo);
@@ -42,7 +47,8 @@ public class WebController {
     public String getPhimBoPage(@RequestParam(required = false, defaultValue = "1") int page,
                                 @RequestParam(required = false, defaultValue = "12") int pageSize,
                                 Model model) {
-        Page<Movie> pageDataPhimBo = movieService.getMovieByType(MovieType.PHIM_BO, true, page, pageSize);
+        Page<Movie> pageDataPhimBo = movieService.getMovieByType(MovieType.PHIM_BO, true, page,
+                pageSize);
         model.addAttribute("pageDataPhimBo", pageDataPhimBo);
         model.addAttribute("currentPage", page);
         return "/web/phim-bo";
@@ -68,6 +74,17 @@ public class WebController {
         return "/web/phim-chieu-rap";
     }
 
+    @GetMapping("/phim/{id}/{slug}")
+    public String getPhimDetail(Model model,
+                                @PathVariable Integer id,
+                                @PathVariable String slug) {
+        Movie movieDetail = movieService.getMovieDetail(id, slug);
+        List<Movie> listMovieSuggestion = movieService.getListMovieSuggestion(movieDetail.getId(), movieDetail.getType());
+        model.addAttribute("movieDetail", movieDetail);
+        model.addAttribute("listMovieSuggestion", listMovieSuggestion);
+        return "/web/chi-tiet-phim";
+    }
+
     @GetMapping("/tin-tuc")
     public String getBlogPage(Model model,
                               @RequestParam(required = false, defaultValue = "1") int page,
@@ -76,5 +93,14 @@ public class WebController {
         model.addAttribute("pageDataBlog", pageDataBlog);
         model.addAttribute("currentPage", page);
         return "/web/blog";
+    }
+
+    @GetMapping("/tin-tuc/{id}/{slug}")
+    public String getBlogDetail(Model model,
+                                @PathVariable Integer id,
+                                @PathVariable String slug) {
+        Blog blogDetail = blogService.getBlogDetail(id, slug);
+        model.addAttribute("blogdetail", blogDetail);
+        return "/web/chi-tiet-tin-tuc";
     }
 }
