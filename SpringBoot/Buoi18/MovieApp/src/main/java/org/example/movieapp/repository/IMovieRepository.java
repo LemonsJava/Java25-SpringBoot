@@ -44,7 +44,7 @@ public interface IMovieRepository extends JpaRepository<Movie, Integer> {
 
     //Phim de xuat
 
-    List<Movie> findByIdAndTypeAndStatus(Integer id, MovieType type, Boolean status);
+    List<Movie> findTop6ByIdNotAndTypeAndStatus(Integer id, MovieType type, Boolean status);
 
 
 }

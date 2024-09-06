@@ -36,6 +36,6 @@ public class MovieService {
     }
 
     public List<Movie> getListMovieSuggestion(Integer id, MovieType type) {
-        return movieRepository.findByIdAndTypeAndStatus(id, type, true);
+        return movieRepository.findTop6ByIdNotAndTypeAndStatus(id, type, true);
     }
 }
