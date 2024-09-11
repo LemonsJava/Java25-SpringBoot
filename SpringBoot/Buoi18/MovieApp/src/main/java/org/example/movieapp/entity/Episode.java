@@ -1,19 +1,10 @@
 package org.example.movieapp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,25 +19,30 @@ import lombok.experimental.FieldDefaults;
 
 public class Episode {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Integer id;
-  @Column(nullable = false)
-  String title;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-  Integer displayOrder;
+    @Column(nullable = false)
+    String name;
 
-  Integer duration;
+    Integer displayOrder;
 
-  @Column(nullable = false)
-  String videoUrl;
-  
-  @Column(nullable = false)
-  Boolean status;
+    Integer duration;
 
-  LocalDateTime createdAt;
+    @Column(nullable = false)
+    String videoUrl;
 
-  LocalDateTime updatedAt;
+    @Column(nullable = false)
+    Boolean status;
 
-  LocalDateTime publishedAt;
+    LocalDateTime createdAt;
+
+    LocalDateTime updatedAt;
+
+    LocalDateTime publishedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    Movie movie;
 }

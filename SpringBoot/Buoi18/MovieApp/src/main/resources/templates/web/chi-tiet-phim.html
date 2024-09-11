@@ -31,7 +31,7 @@
                 <img
                         src="https://motchilltv.io/logo_motchill.png"
                         alt=""
-                        class="Logo-motchill"
+                        class="logo"
                 />
             </a>
             <button
@@ -66,193 +66,220 @@
     </nav>
 </header>
 
+<!-- Content -->
 <section class="py-4">
     <div class="container">
-        <!-- Thông tin chi tiết phim -->
-        <div class="mb-3">
-          <span>
-            <a th:href="@{/home}" class="text-decoration-none">Trang chủ</a>
-            /
-            <a th:href="@{/phim-chieu-rap}" class="text-decoration-none">Phim chiếu rạp</a>
-              / <span th:text="${movieDetail.name}">nDeadpool Và Wolverine</span>
-          </span>
-        </div>
-
-        <div class="movie-info d-flex">
-            <div class="movie-poster overflow-hidden position-relative rounded"
-                 data-bs-toggle="modal" data-bs-target="#modal-trailer">
-                <img
-                        id="movie-poster"
-                        class="w-100"
-                        th:src="${movieDetail.poster}"
-                        th:alt="${movieDetail.name}"
-                >
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a class="text-primary text-decoration-none" href="/home">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a class="text-primary text-decoration-none" href="/phim-bo">Phim bộ</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page" th:text="${movieDetail.name}">Nhím Sonic 2</li>
+            </ol>
+        </nav>
+        <div class="row mt-4">
+            <div class="col-3">
+                <div class="movie-poster overflow-hidden position-relative rounded">
+                    <img
+                            id="movie-poster"
+                            class="w-100"
+                            th:src="${movieDetail.poster}"
+                            th:alt="${movieDetail.name}"
+                    >
+                    <span class="play-icon" data-bs-toggle="modal" data-bs-target="#modal-trailer">
+                        <i class="fa-regular fa-circle-play"></i>
+                    </span>
+                </div>
             </div>
-            <div class="modal fade" id="modal-trailer" tabindex="-1" aria-labelledby="exampleModalLabel"
-                 aria-hidden="true">
-                <div class="modal-dialog modal-xl">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Trailer</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" data-bs-target="#my-modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <iframe id="video-trailer" style="aspect-ratio: 16 / 9" width="100%"
-                                    src="https://www.youtube.com/embed/MjxPoqCvvVs?si=O86GBpvOpevCw1sa"
-                                    title="YouTube video player" frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                        </div>
+            <div class="col-9">
+                <div class="d-flex align-items-center mb-3">
+                    <h4 class="mb-0" th:text="${movieDetail.name}">Nhím Sonic 2</h4>
+                    <div class="d-flex align-items-center bg-body-tertiary p-1 rounded ms-2">
+                        <span class="fw-bold me-1" th:text="${movieDetail.rating}">10</span>
+                        <span class="rating-icon text-yellow-300">
+                            <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                        </span>
                     </div>
                 </div>
-            </div>
-            <div class="ms-3">
-                <div class="d-flex align-items-center">
-                    <h4 class="me-2 mb-0" th:text="${movieDetail.name}">Deadpool Và Wolverine</h4>
-                    <span class="text-weight-bold fs-5 me-1" th:text="${movieDetail.rating}">9.8</span>
-                    <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+                <div class="p-3 bg-body-tertiary">
+                    <div class="row">
+                        <div class="col-2"><p>Thể loại</p></div>
+                        <div class="col-10" th:each="genre : ${movieDetail.genres}">
+                            <p><span th:text="${genre.getName()}"></span>
+                                <span>,</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"><p>Năm sản xuất</p></div>
+                        <div class="col-10"><p th:text="${movieDetail.releaseYear}">2022</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"><p>Quốc gia</p></div>
+                        <div class="col-10"><p>Nhật Bản</p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"><p>Đạo diễn</p></div>
+                        <div class="col-10">
+                            <p>
+                                <span th:each="director : ${movieDetail.directors}"
+                                      th:text="${director.getName()} + ', '">James Marsden</span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"><p>Diễn viên</p></div>
+                        <div class="col-10"><p>
+                            <span th:each="actor : ${movieDetail.actors}"
+                                  th:text="${actor.getName()} + ', '">Ben Schwartz, </span>
+                        </p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"><p>Nội dung phim</p></div>
+                        <div class="col-10"><p th:text="${movieDetail.description}">Khi Robotnik tìm cách quay trở về
+                            Trái Đất thành công, ông ta có một đồng minh mới là Knuckles hùng mạnh, liệu Sonic và người
+                            bạn ới Tails có thể ngăn&nbsp;<span
+                                    class="text-primary">Xem thêm</span></p></div>
+                    </div>
                 </div>
-                <div class="bg-body-tertiary mt-3">
-                    <table class="info-table">
-                        <tr>
-                            <td>Thể loại</td>
-                            <td>Hành Động, Hài Hước, Phiêu Lưu</td>
-                        </tr>
-                        <tr>
-                            <td>Năm sản xuất</td>
-                            <td th:text="${movieDetail.getPublishedAt()}">2024</td>
-                        </tr>
-                        <tr>
-                            <td>Quốc gia</td>
-                            <td>Mỹ</td>
-                        </tr>
-                        <tr>
-                            <td>Đạo diễn</td>
-                            <td>Shawn Levy</td>
-                        </tr>
-                        <tr>
-                            <td>Diễn viên</td>
-                            <td>
-                                Ryan Reynolds, Emma Corrin, Hugf Jackman, Mathew Macfadyen,
-                                Chris Evans, Henry Cavill
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Nội dung phim</td>
-                            <td th:text="${movieDetail.getDescription()}">
-                                Deadpool Và Wolverine kể về Wade Wilson (Ryan Reynolds),
-                                người đang vật lộn với cuộc sống bình thường sau khi những
-                                ngày tháng làm lính đánh thuê đầy đạo đức, Deadpool, đã kết
-                                thúc. Tuy nhiên, khi quê hương anh đối mặt với một mối đe
-                                dọa nghiêm trọng, Wade phải miễn cưỡng trở lại vai trò
-                                Deadpool, cùng với Wolverine, người còn miễn cưỡng hơn cả
-                                anh.
-                                <a href="#">Xem thêm</a>
-                            </td>
-                        </tr>
-                    </table>
+                <div>
+                    <div class="d-flex align-items-center"><a
+                            class="d-inline-block btn btn-danger px-5 py-2 mt-3 rounded me-2"
+                            href="/xem-phim/116/nhim-sonic-2?tap=full"><span class="me-1"><i
+                            class="fa-solid fa-play"></i></span>Xem phim</a>
+                        <!--                        <div id="btn-wishlist-container">-->
+                        <!--                            <button class="d-inline-block btn bg-dark px-5 py-2 mt-3 rounded text-white"><span-->
+                        <!--                                    class="me-1"><i class="fa-solid fa-heart"></i></span>Thêm vào yêu thích-->
+                        <!--                            </button>-->
+                        <!--                        </div>-->
+                    </div>
                 </div>
-                <button type="button" class="btn btn-danger">
-                    <i class="fa-solid fa-play" style="color: #ffffff"></i>
-                    <span class="ms-1">Xem phim</span>
-                </button>
             </div>
         </div>
 
-        <!-- Phim đề xuất -->
-        <section class="mt-4 py-3 bg-body-tertiary">
-            <div class="container">
-                <div class="mb-2 d-flex justify-content-between align-items-center">
-                    <h3 class="mb-0">Phim đề xuất</h3>
-                </div>
+        <div class="mt-4" th:if="${movieDetail.getType().name().equals('PHIM_BO')}">
+            <h4 class="mb-3">Tập phim</h4>
+            <a class="btn btn-dark me-2" href="#" th:each="ep : ${listEpisodes}" th:text="${ep.name}">Tập
+                1</a>
 
-                <div class="row">
-                    <div class="col-2" th:each="movie : ${listMovieSuggestion}">
-                        <a href="#" class="movie-item text-black text-decoration-none">
-                            <div class="movie-poster rounded overflow-hidden">
-                                <img
-                                        th:src="${movie.poster}"
-                                        th:alt="${movie.name}"
-                                />
-                            </div>
-                            <div class="movie-info">
-                                <p class="mt-2" th:text="${movie.name}">Love Next Door</p>
-                            </div>
-                        </a>
-                    </div>
+        </div>
+    </div>
 
+    <!-- Modal-->
+    <div class="modal fade" id="modal-trailer" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Trailer</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-            </div>
-        </section>
-        <!-- Bình luận -->
-        <div class="mt-4 ms-5">
-            <div>
-                <h5>Bình luận</h5>
-            </div>
-            <div>
-                <p>
-                    Vui lòng <a href="#" class="text-decoration-none">đăng nhập</a> để
-                    viết bình luận.
-                </p>
-            </div>
-            <div>
-                <div class="container mt-3">
-                    <div class="d-flex align-items-start">
-                        <div class="profile-circle">D</div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">
-                                Lê Hải Dũng <small class="text-muted"
-                                                   th:text="${#temporals.format(movieDetail.getPublishedAt(),'dd/MM/yyyy')}">20/08/2024</small>
-                            </h6>
-                            <p class="mb-0">
-                    <span
-                    ><i class="fa-solid fa-star" style="color: #ffd43b"></i
-                    ></span>
-                                <strong>10/10</strong> Xuất sắc
-                            </p>
-                            <p class="text-muted">nhạt như nước ốc</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container mt-3">
-                    <div class="d-flex align-items-start">
-                        <div class="profile-circle">D</div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">
-                                Lê Hải Dũng <small class="text-muted">10/08/2024</small>
-                            </h6>
-                            <p class="mb-0">
-                    <span
-                    ><i class="fa-solid fa-star" style="color: #ffd43b"></i
-                    ></span>
-                                <strong>9/10</strong> Xuất sắc
-                            </p>
-                            <p class="text-muted">phim hay</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="container mt-3">
-                    <div class="d-flex align-items-start">
-                        <div class="profile-circle">D</div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">
-                                Lê Hải Dũng <small class="text-muted">12/05/2024</small>
-                            </h6>
-                            <p class="mb-0">
-                    <span
-                    ><i class="fa-solid fa-star" style="color: #ffd43b"></i
-                    ></span>
-                                <strong>10/10</strong> Xuất sắc
-                            </p>
-                            <p class="text-muted">tuyệt vời</p>
-                        </div>
-                    </div>
+                <div class="modal-body">
+                    <iframe id="video-trailer" style="aspect-ratio: 16 / 9" width="100%"
+                            src="https://www.youtube.com/embed/MjxPoqCvvVs?si=O86GBpvOpevCw1sa"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<!-- Phim đề xuất -->
+<section class="mt-4 py-3 bg-body-tertiary">
+    <div class="container">
+        <div class="mb-2 d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">Phim đề xuất</h3>
+        </div>
+
+        <div class="row">
+            <div class="col-2" th:each="movie : ${listMovieSuggestion}">
+                <a th:href="|/phim/${movie.id}/${movie.slug}|"
+                   class="movie-item text-black text-decoration-none">
+                    <div class="movie-poster rounded overflow-hidden">
+                        <img
+                                th:src="${movie.poster}"
+                                th:alt="${movie.name}"
+                        />
+                    </div>
+                    <div class="movie-info">
+                        <p class="mt-2" th:text="${movie.name}">Love Next Door</p>
+                    </div>
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Bình luận -->
+<div class="mt-4 ms-5">
+    <div class="container">
+        <div>
+            <h5>Bình luận</h5>
+        </div>
+        <div>
+            <p>
+                Vui lòng <a href="#" class="text-decoration-none" style="color: #0068fc">đăng nhập</a> để
+                viết bình luận.
+            </p>
+        </div>
+        <div>
+            <div class="row my-3" th:each="review : ${listReviews}">
+                <div class="d-flex align-items-start">
+                    <div class="col-1">
+                        <img class="rounded-circle"
+                             th:src="${review.user.getAvatar()}"
+                             th:alt="${review.user.getName()}"
+                        />
+                    </div>
+                    <div class="col-11 ms-3">
+                        <h6 class="mb-0" th:text="${review.user.getName()}">
+                            Lê Hải Dũng <small class="text-muted"
+                                               th:text="${#temporals.format(review.getCreatedAt(),'dd/MM/yyyy')}">20/08/2024</small>
+                        </h6>
+                        <p class="mb-0">
+                            <span>
+                             <i class="fa-solid fa-star" style="color: #ffd43b"></i>
+                            </span>
+                            <span th:text="${review.getRating()}"></span>
+                            <span th:if="${review.getRating() >=8 }">Xuất sắc</span>
+                            <span th:if="${review.getRating() >=5 && review.getRating() <8 }">Tạm ổn</span>
+                            <span th:if="${review.getRating() >=0 && review.getRating() <5 }">Không hay</span>
+                        </p>
+                        <p class="text-muted" th:text="${review.getContent()}">nhạt như nước ốc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- pagination -->
+        <div class="d-flex justify-content-center mt-3" th:if="${listReviews.getTotalPages()} > 1">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination gap-1">
+                    <li class="page-item" th:classappend="${currentPage == 1 ? 'disabled' : ''}">
+                        <a class="page-link"
+                           th:href="|/phim/${movieDetail.getId()}/${movieDetail.getSlug()}?page=${currentPage - 1}|"
+                           aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" th:each="number : ${#numbers.sequence(1, listReviews.getTotalPages())}">
+                        <a class="page-link"
+                           th:classappend="${currentPage == number ? 'active' : ''}"
+                           th:href="|/phim/${movieDetail.getId()}/${movieDetail.getSlug()}?page=${number}|"
+                           th:text="${number}">1</a></li>
+                    <li class="page-item"
+                        th:classappend="${currentPage == listReviews.getTotalPages() ? 'disabled' : ''}">
+                        <a class="page-link"
+                           th:href="|/phim/${movieDetail.getId()}/${movieDetail.getSlug()}?page=${currentPage + 1}|"
+                           aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
 <!-- Footer -->
 <footer class="bg-dark py-4">
     <div class="container">
@@ -261,7 +288,7 @@
                 <img
                         src="https://motchilltv.io/logo_motchill.png"
                         alt=""
-                        class="Logo-motchill"
+                        class="logo"
                 />
                 <p class="text-white mt-3">
                     Motchill - Xem phim online vietsub chất lượng cao miễn phí, nhiều
@@ -363,5 +390,6 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"
 ></script>
+
 </body>
 </html>

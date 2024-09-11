@@ -1,19 +1,10 @@
 package org.example.movieapp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,28 +19,32 @@ import lombok.experimental.FieldDefaults;
 
 public class Blog {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-  @Column(nullable = false, unique = true)
-  String title;
+    @Column(nullable = false, unique = true)
+    String title;
 
-  @Column(nullable = false, unique = true)
-  String slug;
+    @Column(nullable = false, unique = true)
+    String slug;
 
-  @Column(columnDefinition = "TEXT")
-  String content;
+    @Column(columnDefinition = "TEXT")
+    String content;
 
-  @Column(columnDefinition = "TEXT")
-  String description;
+    @Column(columnDefinition = "TEXT")
+    String description;
 
-  String thumbnail;
+    String thumbnail;
 
-  Boolean status;
+    Boolean status;
 
-  LocalDateTime createdAt;
-  LocalDateTime updatedAt;
-  LocalDateTime publishedAt;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
+    LocalDateTime publishedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 
 }

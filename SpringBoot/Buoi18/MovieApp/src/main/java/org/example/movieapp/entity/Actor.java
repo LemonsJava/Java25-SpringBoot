@@ -1,19 +1,10 @@
 package org.example.movieapp.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,18 +19,21 @@ import lombok.experimental.FieldDefaults;
 
 public class Actor {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
 
-  @Column(nullable = false, unique = true)
-  String name;
+    @Column(nullable = false, unique = true)
+    String name;
 
-  @Column(columnDefinition = "TEXT")
-  String biography;
+    @Column(nullable = false, unique = true)
+    String slug;
 
-  String avatar;
+    @Column(columnDefinition = "TEXT")
+    String biography;
 
-  LocalDateTime createdAt;
-  LocalDateTime updatedAt;
+    String avatar;
+
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
 }

@@ -2,10 +2,14 @@ package org.example.movieapp.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.example.movieapp.entity.Blog;
+import org.example.movieapp.entity.Episode;
 import org.example.movieapp.entity.Movie;
+import org.example.movieapp.entity.Review;
 import org.example.movieapp.model.enums.MovieType;
 import org.example.movieapp.service.BlogService;
+import org.example.movieapp.service.EpisodeService;
 import org.example.movieapp.service.MovieService;
+import org.example.movieapp.service.ReviewService;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +26,8 @@ public class WebController {
 
     private final MovieService movieService;
     private final BlogService blogService;
+    private final EpisodeService episodeService;
+    private final ReviewService reviewService;
 
     @GetMapping("/home")
     public String getHomePage(Model model) {
@@ -77,11 +83,18 @@ public class WebController {
     @GetMapping("/phim/{id}/{slug}")
     public String getPhimDetail(Model model,
                                 @PathVariable Integer id,
-                                @PathVariable String slug) {
+                                @PathVariable String slug,
+                                @RequestParam(required = false, defaultValue = "1") int page,
+                                @RequestParam(required = false, defaultValue = "5") int pageSize) {
         Movie movieDetail = movieService.getMovieDetail(id, slug);
+        List<Episode> listEpisodes = episodeService.getEpisodesByMovieId(movieDetail.getId());
         List<Movie> listMovieSuggestion = movieService.getListMovieSuggestion(movieDetail.getId(), movieDetail.getType());
+        Page<Review> listReviews = reviewService.getReviewByMovieIdAndUserId(movieDetail.getId(), page, pageSize);
         model.addAttribute("movieDetail", movieDetail);
+        model.addAttribute("listEpisodes", listEpisodes);
         model.addAttribute("listMovieSuggestion", listMovieSuggestion);
+        model.addAttribute("listReviews", listReviews);
+        model.addAttribute("currentPage", page);
         return "/web/chi-tiet-phim";
     }
 
