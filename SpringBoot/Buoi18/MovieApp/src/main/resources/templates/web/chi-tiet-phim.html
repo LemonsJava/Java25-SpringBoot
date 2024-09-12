@@ -104,9 +104,12 @@
                 <div class="p-3 bg-body-tertiary">
                     <div class="row">
                         <div class="col-2"><p>Thể loại</p></div>
-                        <div class="col-10" th:each="genre : ${movieDetail.genres}">
-                            <p><span th:text="${genre.getName()}"></span>
-                                <span>,</span>
+                        <div class="col-10">
+                            <p>
+                                <th:block th:each="genre, iterStart : ${movieDetail.genres}">
+                                    <span th:text="${genre.name}"></span>
+                                    <span th:if="${!iterStart.last}">, </span>
+                                </th:block>
                             </p>
                         </div>
                     </div>
@@ -116,23 +119,27 @@
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Quốc gia</p></div>
-                        <div class="col-10"><p>Nhật Bản</p></div>
+                        <div class="col-10" th:text="${movieDetail.country.name}"><p>Nhật Bản</p></div>
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Đạo diễn</p></div>
                         <div class="col-10">
-                            <p>
-                                <span th:each="director : ${movieDetail.directors}"
-                                      th:text="${director.getName()} + ', '">James Marsden</span>
-                            </p>
+                            <th:block th:each="director, iterStart : ${movieDetail.directors}">
+                                <span th:text="${director.name}"></span>
+                                <span th:if="${!iterStart.last}">, </span>
+                            </th:block>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Diễn viên</p></div>
-                        <div class="col-10"><p>
-                            <span th:each="actor : ${movieDetail.actors}"
-                                  th:text="${actor.getName()} + ', '">Ben Schwartz, </span>
-                        </p></div>
+                        <div class="col-10">
+                            <p>
+                                <th:block th:each="actor, iterStart : ${movieDetail.actors}">
+                                    <span th:text="${actor.name}"></span>
+                                    <span th:if="${!iterStart.last}">, </span>
+                                </th:block>
+                            </p>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-2"><p>Nội dung phim</p></div>
