@@ -220,14 +220,86 @@
 <!-- Bình luận -->
 <div class="mt-4 ms-5">
     <div class="container">
-        <div>
-            <h5>Bình luận</h5>
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <div>
+                    <h5>Bình luận</h5>
+                </div>
+                <div>
+                    <p>
+                        Vui lòng <a href="#" class="text-decoration-none" style="color: #0068fc">đăng nhập</a> để
+                        viết bình luận.
+                    </p>
+                </div>
+            </div>
+            <div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#modal-review-rating">
+                    Viết bình luận
+                </button>
+
+            </div>
         </div>
-        <div>
-            <p>
-                Vui lòng <a href="#" class="text-decoration-none" style="color: #0068fc">đăng nhập</a> để
-                viết bình luận.
-            </p>
+        <!-- Modal -->
+        <div class="modal fade" id="modal-review-rating" data-bs-backdrop="static" data-bs-keyboard="false"
+             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Đánh giá phim</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="review-rating">
+                            <div>
+                                <h4 class="mb-3" th:text="${movieDetail.getName()}"></h4>
+                            </div>
+                            <div class="rating-stars">
+                                <span class="rating-star" data-value="1">
+                                    <i class="fa-solid fa-star"></i>
+                                </span>
+                                <span class="rating-star" data-value="2">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="3">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="4">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="5">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="6">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="7">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="8">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="9">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                                <span class="rating-star" data-value="10">
+                                            <i class="fa-solid fa-star"></i>
+                                        </span>
+                            </div>
+                            <div>
+                                <p class="my-3" id="rating-text">Chọn mức đánh giá</p>
+                            </div>
+                        </div>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="7"
+                                  placeholder="Hãy chia sẻ cảm nhận của bạn về bộ phim"></textarea>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="button" class="btn btn-primary px-5">Hoàn tất</button>
+                    </div>
+                </div>
+            </div>
         </div>
         <div>
             <div class="row my-3" th:each="review : ${listReviews}">

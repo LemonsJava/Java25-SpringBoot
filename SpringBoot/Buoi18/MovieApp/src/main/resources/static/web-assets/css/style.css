@@ -36,7 +36,7 @@ strong {
     padding-top: 0.625rem;
     padding-bottom: 0.5rem;
     border-width: 0px;
-    border-color: none;
+    /*border-color: none;*/
     border-radius: 0.25rem;
     box-shadow: 0 8px 9px -4px rgba(0, 0, 0, 0.15), 0 4px 18px 0 rgba(0, 0, 0, 0.1);
     vertical-align: bottom;
@@ -471,9 +471,9 @@ strong {
     height: 100%;
     top: 0;
     left: 0;
-    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 150px, rgba(0, 0, 0, .6) 100%);
-    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 1) 150px, rgba(0, 0, 0, .6) 100%);
-    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 1) 150px, rgba(0, 0, 0, .6) 100%);
+    /*background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 1) 150px, rgba(0, 0, 0, .6) 100%);*/
+    /*background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 1) 150px, rgba(0, 0, 0, .6) 100%);*/
+    /*background-image: -o-linear-gradient(left, rgba(0, 0, 0, 1) 150px, rgba(0, 0, 0, .6) 100%);*/
     background-image: linear-gradient(to right, rgba(0, 0, 0, 1) 150px, rgba(0, 0, 0, .6) 100%);
 }
 
@@ -554,6 +554,39 @@ strong {
     overflow: hidden;
     aspect-ratio: 1/1;
     object-fit: cover;
+}
+
+.review-rating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.review-rating .rating-stars {
+    padding: 15px 0;
+    cuisor: pointer;
+    display: inline-block;
+
+}
+
+.review-rating .rating-stars .rating-star {
+    display: inline-block;
+    cuisor: pointer;
+}
+
+.review-rating .rating-stars .rating-star i {
+    font-size: 35px;
+    color: #ebebeb;
+    transition: color 0.2s ease-in-out;
+}
+
+.review-rating .rating-stars .rating-star.selected i {
+    color: #FFD43B;
+}
+
+.review-rating .rating-stars .rating-star.hover i {
+    color: #FFD43B;
 }
 
 /*TOC container blog*/

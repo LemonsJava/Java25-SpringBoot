@@ -1,22 +1,105 @@
 package org.example.movieapp.service;
 
 import lombok.RequiredArgsConstructor;
+import org.example.movieapp.entity.Movie;
 import org.example.movieapp.entity.Review;
+import org.example.movieapp.entity.User;
+import org.example.movieapp.model.request.CreateReviewRequest;
+import org.example.movieapp.model.request.UpdateReviewRequest;
+import org.example.movieapp.repository.IMovieRepository;
 import org.example.movieapp.repository.IReviewRepository;
+import org.example.movieapp.repository.IUserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 
 public class ReviewService {
     private final IReviewRepository reviewRepository;
+    private final IMovieRepository movieRepository;
+    private final IUserRepository userRepository;
 
     public Page<Review> getReviewByMovieIdAndUserId(Integer movieId, int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
         return reviewRepository.findByMovieId(movieId, pageable);
+    }
+
+    public Review createReview(CreateReviewRequest request) {
+        //TODO: fix User. Sau nay user se la user dang login
+        Integer userId = 7;
+        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Movie movie = movieRepository.findById(request.getMovieId()).orElseThrow(() -> new RuntimeException("Movie not found"));
+
+        //TODO: Bo sung validate rating, content
+        if (request.getRating() < 0 || request.getRating() > 10) {
+            throw new RuntimeException("Rating must be between 0 and 10");
+        }
+
+        if (request.getContent() == null || request.getContent().isEmpty()) {
+            throw new RuntimeException("Content cannot be empty");
+        }
+
+        Review review = Review.builder()
+                .content(request.getContent())
+                .rating(request.getRating())
+                .movie(movie)
+                .user(user)
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        return reviewRepository.save(review);
+    }
+
+    public Review updateReview(UpdateReviewRequest request, Integer reviewId) {
+        //TODO: fix User. Sau nay user se la user dang login
+        Integer userId = 7;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+
+        //check user is owner of review
+        if (!review.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("User is not owner of review");
+        }
+
+        //TODO: Bo sung validate rating, content
+        if (request.getRating() < 0 || request.getRating() > 10) {
+            throw new RuntimeException("Rating must be between 0 and 10");
+        }
+
+        if (request.getContent() == null || request.getContent().isEmpty()) {
+            throw new RuntimeException("Content cannot be empty");
+        }
+
+        review.setContent(request.getContent());
+        review.setRating(request.getRating());
+        review.setUpdatedAt(LocalDateTime.now());
+        return reviewRepository.save(review);
+    }
+
+    public void deleteReview(Integer reviewId) {
+        //TODO: fix User. Sau nay user se la user dang login
+        Integer userId = 7;
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new RuntimeException("Review not found"));
+
+        //check user is owner of review
+        if (!review.getUser().getId().equals(user.getId())) {
+            throw new RuntimeException("User is not owner of review");
+        }
+
+        reviewRepository.delete(review);
     }
 }
