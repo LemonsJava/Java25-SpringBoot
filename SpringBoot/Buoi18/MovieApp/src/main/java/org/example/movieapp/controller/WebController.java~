@@ -87,7 +87,7 @@ public class WebController {
         Movie movieDetail = movieService.getMovieDetail(id, slug);
         List<Episode> listEpisodes = episodeService.getEpisodesByMovieId(movieDetail.getId());
         List<Movie> listMovieSuggestion = movieService.getListMovieSuggestion(movieDetail.getId(), movieDetail.getType());
-        List<Review> listReviews = reviewService.getReviewByMovieId(id);
+        List<Review> listReviews = reviewService.getReviewByMovieId(movieDetail.getId());
         model.addAttribute("movieDetail", movieDetail);
         model.addAttribute("listEpisodes", listEpisodes);
         model.addAttribute("listMovieSuggestion", listMovieSuggestion);

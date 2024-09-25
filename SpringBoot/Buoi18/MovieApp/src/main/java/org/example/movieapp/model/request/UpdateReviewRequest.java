@@ -13,5 +13,5 @@ import lombok.experimental.FieldDefaults;
 public class UpdateReviewRequest {
 
     String content;
-    Double rating;
+    Integer rating;
 }

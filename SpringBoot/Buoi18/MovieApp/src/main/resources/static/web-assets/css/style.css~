@@ -563,19 +563,30 @@ strong {
     justify-content: center;
 }
 
-.rating {
-    font-size: 20px;
-    cursor: pointer;
+.review-rating .rating-stars {
+    padding: 15px 0;
+    cuisor: pointer;
     display: inline-block;
+
 }
 
-.star {
+.review-rating .rating-stars .rating-star {
     display: inline-block;
+    cuisor: pointer;
 }
 
-.star:hover,
-.star.active {
-    color: #EDBB0E;
+.review-rating .rating-stars .rating-star i {
+    font-size: 35px;
+    color: #ebebeb;
+    transition: color 0.2s ease-in-out;
+}
+
+.review-rating .rating-stars .rating-star.selected i {
+    color: #FFD43B;
+}
+
+.review-rating .rating-stars .rating-star.hover i {
+    color: #FFD43B;
 }
 
 /*TOC container blog*/

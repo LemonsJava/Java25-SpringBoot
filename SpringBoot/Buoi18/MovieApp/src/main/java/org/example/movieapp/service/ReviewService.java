@@ -16,6 +16,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +29,10 @@ public class ReviewService {
     public Page<Review> getReviewByMovieIdAndUserId(Integer movieId, int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
         return reviewRepository.findByMovieId(movieId, pageable);
+    }
+
+    public List<Review> getReviewByMovieId(Integer movieId) {
+        return reviewRepository.findByMovieId(movieId, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Review createReview(CreateReviewRequest request) {

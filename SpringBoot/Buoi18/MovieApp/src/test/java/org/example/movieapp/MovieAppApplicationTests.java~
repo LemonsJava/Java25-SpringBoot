@@ -186,7 +186,7 @@ class MovieAppApplicationTests {
                 User rdUser = users.get(rd.nextInt(users.size()));
                 Review review = Review.builder()
                         .content(faker.lorem().paragraph())
-                        .rating(faker.number().numberBetween(0, 10))
+                        .rating(faker.number().numberBetween(0, 10)
                         .movie(movie)
                         .user(rdUser)
                         .createdAt(LocalDateTime.now())

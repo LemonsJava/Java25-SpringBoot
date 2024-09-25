@@ -13,6 +13,6 @@ import lombok.experimental.FieldDefaults;
 
 public class CreateReviewRequest {
     String content;
-    Double rating;
+    Integer rating;
     Integer movieId;
 }
