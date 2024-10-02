@@ -78,21 +78,48 @@ const renderReviews = (listReviews) => {
                         </p>
                     </div>
                     <p class="rating-content mt-1 mb-0 text-muted">${review.content}</p>
-                    <div>
-                        <button 
-                            onclick="openModalReviewUpdate(${review.id})"
-                            class="text-primary border-0 bg-transparent me-1">Sửa</button>
-                        <button
-                            onclick="deleteReview(${review.id})"
-                            class="text-danger border-0 bg-transparent me-1">Xóa
-                        </button>
-                    </div>
+                    ${currentUser != null && currentUser.id == review.user.id ?
+            `
+                            <div>
+                                <button
+                                    onclick="openModalReviewUpdate(${review.id})"
+                                    class="text-primary border-0 bg-transparent me-1">Sửa</button>
+                                <button
+                                    onclick="deleteReview(${review.id})"
+                                    class="text-danger border-0 bg-transparent me-1">Xóa
+                                </button>
+                            </div>
+                        ` : ''
+        }
                 </div>
             </div>
         `
     });
     reviewListEl.innerHTML = html;
 };
+
+
+//popup modal
+modalReviewEl.addEventListener('show.bs.modal', event => {
+    const modalTitle = document.querySelector("#modalReview .modal-title");
+    const formBtn = document.querySelector("#form-review button[type='submit']");
+
+    if (updatedId) {
+        modalTitle.textContent = "Cập nhật bình luận";
+        formBtn.textContent = "Cập nhật";
+    } else {
+        modalTitle.textContent = "Tạo bình luận";
+        formBtn.textContent = "Tạo bình luận";
+    }
+})
+
+modalReviewEl.addEventListener('hidden.bs.modal', event => {
+    selectedRating = 0;
+    resetStars();
+    ratingValue.textContent = "Vui lòng chọn đánh giá";
+    reviewContentEl.value = "";
+    updatedId = null;
+})
 
 
 //format date
@@ -120,12 +147,12 @@ formReviewEl.addEventListener("submit", (e) => {
 //Tạo review
 const createReview = async () => {
     if (selectedRating === 0) {
-        alert("Vui lòng chọn số sao");
+        toastr.warning('Vui lòng chọn số sao');
         return;
     }
 
     if (reviewContentEl.value.trim() === "") {
-        alert("Vui lòng nhập nội dung bình luận");
+        toastr.warning('Vui lòng nhập nội dung bình luận');
         return;
     }
 
@@ -140,10 +167,12 @@ const createReview = async () => {
         let res = await axios.post("/api/reviews", request);
         console.log(res.data)
         listReviews.unshift(res.data);
-        renderReviews(listReviews);
+        render(listReviews);
         modalReviewInstance.hide();
+        toastr.success('Tao bình luận thành công');
     } catch (error) {
         console.log(error);
+        toastr.error(error.response.data.message);
     }
 }
 
@@ -151,6 +180,10 @@ const createReview = async () => {
 //Cập nhật review
 
 const editReview = async () => {
+    if (reviewContentEl.value.trim() === "") {
+        toastr.warning('Vui long nhap nội dung bình luận');
+    }
+
     const reviewData = {
         rating: selectedRating,
         content: reviewContentEl.value.trim()
@@ -165,10 +198,12 @@ const editReview = async () => {
             }
             return review;
         });
-        renderReviews(listReviews);
+        render(listReviews);
         modalReviewInstance.hide();
+        toastr.success('Cập nhật bình luận thành công');
     } catch (error) {
         console.log(error);
+        toastr.error(error.response.data.message);
     }
 }
 
@@ -182,9 +217,11 @@ const deleteReview = async (reviewId) => {
         let res = await axios.delete(`/api/reviews/${reviewId}`);
         console.log(res.data);
         listReviews = listReviews.filter(review => review.id !== reviewId);
-        renderReviews(listReviews);
+        render(listReviews);
+        toastr.success('Xóa bình luận thành công');
     } catch (error) {
         console.log(error);
+        toastr.error(error.response.data.message);
     }
 }
 
@@ -202,31 +239,21 @@ const openModalReviewUpdate = (id) => {
     reviewContentEl.value = review.content;
 }
 
-//popup modal
-modalReviewEl.addEventListener('show.bs.modal', event => {
-    const modalTitle = document.querySelector("#modalReview .modal-title");
-    const formBtn = document.querySelector("#form-review button[type='submit']");
-
-    if (updatedId) {
-        modalTitle.textContent = "Cập nhật bình luận";
-        formBtn.textContent = "Cập nhật";
-    } else {
-        modalTitle.textContent = "Tạo bình luận";
-        formBtn.textContent = "Tạo bình luận";
-    }
-})
-
-modalReviewEl.addEventListener('hidden.bs.modal', event => {
-    selectedRating = 0;
-    resetStars();
-    ratingValue.textContent = "Vui lòng chọn đánh giá";
-    reviewContentEl.value = "";
-    updatedId = null;
-})
+const render = () => {
+    $('#review-pagination').pagination({
+        dataSource: listReviews,
+        pageSize: 5,
+        showPrevious: false,
+        showNext: false,
+        callback: function (data, pagination) {
+            renderReviews(data);
+        }
+    })
+}
 
 
 // render list review
-renderReviews(listReviews);
+render();
 
 
 

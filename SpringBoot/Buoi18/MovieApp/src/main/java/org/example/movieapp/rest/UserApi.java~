@@ -1,0 +1,28 @@
+package org.example.movieapp.rest;
+
+import lombok.RequiredArgsConstructor;
+import org.example.movieapp.model.request.UpdatePasswordUserRequest;
+import org.example.movieapp.model.request.UpdateProfileUserRequest;
+import org.example.movieapp.service.UserService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequiredArgsConstructor
+public class UserApi {
+    private final UserService userService;
+
+    @PutMapping("/api/users/update-profile")
+    public ResponseEntity<?> updateProfile(@RequestBody UpdateProfileUserRequest request) {
+        userService.updateProfile(request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/api/users/update-password")
+    public ResponseEntity<?> updatePassword(@RequestBody UpdatePasswordUserRequest request) {
+        userService.updatePassword(request);
+        return ResponseEntity.ok().build();
+    }
+}

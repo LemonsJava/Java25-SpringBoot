@@ -1,0 +1,63 @@
+package com.example.webshopmenswear;
+
+import com.example.webshopmenswear.entity.Category;
+import com.example.webshopmenswear.repository.ICategoryRepository;
+import com.github.javafaker.Faker;
+import com.github.slugify.Slugify;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import java.time.LocalDateTime;
+import java.util.Random;
+
+@SpringBootTest
+class WebShopMenswearApplicationTests {
+    @Autowired
+    private ICategoryRepository categoryRepository;
+
+    @Test
+    void saveCategories() {
+        Faker faker = new Faker();
+        Slugify slugify = Slugify.builder().build();
+
+        for (int i = 0; i < 5; i++) {
+            String name = faker.leagueOfLegends().rank();
+            String slug = slugify.slugify(name);
+
+            Category category = Category.builder()
+                    .name(name)
+                    .slug(slug)
+                    .parent(null)
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+
+            categoryRepository.save(category);
+        }
+    }
+
+    @Test
+    void saveSubCategories() {
+        Faker faker = new Faker();
+        Slugify slugify = Slugify.builder().build();
+        Random rd = new Random();
+
+        for (int i = 0; i < 10; i++) {
+            String name = faker.leagueOfLegends().champion();
+            String slug = slugify.slugify(name);
+
+            Category category = Category.builder()
+                    .name(name)
+                    .slug(slug)
+                    .parent(rd.)
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .build();
+
+            categoryRepository.save(category);
+        }
+
+        }
+
+}

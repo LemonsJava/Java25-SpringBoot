@@ -1,0 +1,4 @@
+package com.example.webshopmenswear.entity;
+
+public class Ward {
+}

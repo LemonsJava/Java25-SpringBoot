@@ -17,8 +17,15 @@
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
             integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg=="
             crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-    />
+            referrerpolicy="no-referrer"/>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+          integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer"/>
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.css" integrity="sha512-K1k7jSn9RDKEcn/ugqVVvWYu0bcS3q1w6m/5pQSnrj0bCfIqF6Wk49lkmckSb4wglvTP9V17LtS0q0XxYccXbg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- CSS myStyle -->
     <link rel="stylesheet" th:href="@{/web-assets/css/style.css}"/>
 </head>
@@ -60,7 +67,32 @@
                     <a class="nav-link text-white" href="#">Mua phim</a>
                 </div>
                 <div>
-                    <a href="#" class="text-white text-decoration-none">Đăng nhập</a>
+                    <a th:if="${session.currentUser == null}" href="/dang-nhap" class="text-white text-decoration-none">Đăng nhập</a>
+
+                    <div class="dropdown" th:if="${session.currentUser != null}">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                                aria-expanded="false" th:text="${session.currentUser.name}">
+                        </button>
+
+                        <ul class="dropdown-menu">
+                            <li th:if="${session.currentUser.role.toString() == 'ADMIN'}">
+                                <a class="dropdown-item" th:href="@{/admin}">Trang quản trị</a></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/thong-tin-ca-nhan}">Thông tin cá nhân</a></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/phim-yeu-thich}">Phim yêu thích</a></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" th:href="@{/lich-su-xem-phim}">Lịch sử xem phim</a></a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" id="logout" style="cuisor: pointer">Đăng xuất</a></a>
+                            </li>
+                        </ul>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -151,15 +183,25 @@
                     </div>
                 </div>
                 <div>
-                    <div class="d-flex align-items-center"><a
+                    <div class="d-flex align-items-center">
+                        <a th:if="${movieDetail.type.toString() == 'PHIM_BO'}"
                             class="d-inline-block btn btn-danger px-5 py-2 mt-3 rounded me-2"
-                            href="/xem-phim/116/nhim-sonic-2?tap=full"><span class="me-1"><i
-                            class="fa-solid fa-play"></i></span>Xem phim</a>
-                        <!--                        <div id="btn-wishlist-container">-->
-                        <!--                            <button class="d-inline-block btn bg-dark px-5 py-2 mt-3 rounded text-white"><span-->
-                        <!--                                    class="me-1"><i class="fa-solid fa-heart"></i></span>Thêm vào yêu thích-->
-                        <!--                            </button>-->
-                        <!--                        </div>-->
+                            th:href="|/xem-phim/phim/${movieDetail.id}/${movieDetail.slug}?tap=1|"><span class="me-1"><i
+                            class="fa-solid fa-play"></i></span>Xem phim
+                        </a>
+
+                        <a th:if="${movieDetail.type.toString() == 'PHIM_LE' || movieDetail.type.toString() == 'PHIM_CHIEU_RAP'}"
+                           class="d-inline-block btn btn-danger px-5 py-2 mt-3 rounded me-2"
+                           th:href="|/xem-phim/phim/${movieDetail.id}/${movieDetail.slug}?tap=full|"><span class="me-1"><i
+                                class="fa-solid fa-play"></i></span>Xem phim
+                        </a>
+
+
+                        <div id="btn-wishlist-container">
+                            <button class="d-inline-block btn bg-dark px-5 py-2 mt-3 rounded text-white"><span
+                                    class="me-1"><i class="fa-solid fa-heart"></i></span>Thêm vào yêu thích
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -167,8 +209,9 @@
 
         <div class="mt-4" th:if="${movieDetail.getType().name().equals('PHIM_BO')}">
             <h4 class="mb-3">Tập phim</h4>
-            <a class="btn btn-dark me-2" href="#" th:each="ep : ${listEpisodes}" th:text="${ep.name}">Tập
-                1</a>
+            <a th:each="ep : ${listEpisodes}"
+               class="btn btn-dark me-2" th:href="|/xem-phim/phim/${movieDetail.id}/${movieDetail.slug}?tap=${ep.displayOrder}|">
+                Tập <th:block th:text="${ep.displayOrder}"></th:block></a>
 
         </div>
     </div>
@@ -224,7 +267,7 @@
 <section class="py-4">
     <div class="container">
         <div>
-            <div class="d-flex justify-content-between align-items-center"><h4 class="mb-3">Bình luận</h4>
+            <div th:if="${session.currentUser != null}" class="d-flex justify-content-between align-items-center"><h4 class="mb-3">Bình luận</h4>
                 <button class="btn btn-primary btn-create-review" type="button" data-bs-toggle="modal"
                         data-bs-target="#modalReview">Viết bình luận</button>
             </div>
@@ -255,6 +298,9 @@
 <!--                        </div>-->
 <!--                    </div>-->
 <!--                </div>-->
+            </div>
+            <div id="review-pagination" class="d-flex justify-content-center align-items-center">
+
             </div>
         </div>
     </div>
@@ -421,6 +467,8 @@
     </div>
 </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <!--JS Bootstrap-->
 <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -428,11 +476,20 @@
         crossorigin="anonymous"
 ></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
+        integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.6.0/pagination.min.js" integrity="sha512-GzbaI5EsNzdEUq6/2XLYpr1y9CUZRIVsUeWTAFgULtQa5jZ3Nug8i0nZKM6jp9NffBCZhymPPQFcF0DK+JkRpw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script th:src="@{/web-assets/js/main.js}"></script>
 
 <script th:inline="javascript">
     let movieDetail = [[${movieDetail}]];
     let listReviews = [[${listReviews}]];
+    let currentUser = [[${session.currentUser}]];
     console.log(movieDetail);
     console.log(listReviews);
 </script>

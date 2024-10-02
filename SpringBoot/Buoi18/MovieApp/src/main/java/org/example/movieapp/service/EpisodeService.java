@@ -16,4 +16,9 @@ public class EpisodeService {
     public List<Episode> getEpisodesByMovieId(Integer movieId) {
         return episodeRepository.findByMovieIdOrderByDisplayOrderAsc(movieId);
     }
+
+    public Episode getEpisodeByMovieIdAndStatusAndDisplayOrder(Integer movieId, String displayOrder) {
+        Integer convertTap = displayOrder.equals("full") ? 1 : Integer.parseInt(displayOrder);
+        return episodeRepository.findByMovieIdAndStatusAndDisplayOrder(movieId, true, convertTap).orElse(null);
+    }
 }

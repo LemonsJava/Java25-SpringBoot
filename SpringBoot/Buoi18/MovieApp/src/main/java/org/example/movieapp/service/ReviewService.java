@@ -1,5 +1,6 @@
 package org.example.movieapp.service;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.example.movieapp.entity.Movie;
 import org.example.movieapp.entity.Review;
@@ -25,6 +26,7 @@ public class ReviewService {
     private final IReviewRepository reviewRepository;
     private final IMovieRepository movieRepository;
     private final IUserRepository userRepository;
+    private final HttpSession session;
 
     public Page<Review> getReviewByMovieIdAndUserId(Integer movieId, int page, int pageSize) {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
@@ -36,9 +38,8 @@ public class ReviewService {
     }
 
     public Review createReview(CreateReviewRequest request) {
-        //TODO: fix User. Sau nay user se la user dang login
-        Integer userId = 7;
-        User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = (User) session.getAttribute("currentUser");
+
         Movie movie = movieRepository.findById(request.getMovieId()).orElseThrow(() -> new RuntimeException("Movie not found"));
 
         //TODO: Bo sung validate rating, content
@@ -63,10 +64,7 @@ public class ReviewService {
     }
 
     public Review updateReview(UpdateReviewRequest request, Integer reviewId) {
-        //TODO: fix User. Sau nay user se la user dang login
-        Integer userId = 7;
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = (User) session.getAttribute("currentUser");
 
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("Review not found"));
@@ -92,10 +90,7 @@ public class ReviewService {
     }
 
     public void deleteReview(Integer reviewId) {
-        //TODO: fix User. Sau nay user se la user dang login
-        Integer userId = 7;
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = (User) session.getAttribute("currentUser");
 
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new RuntimeException("Review not found"));

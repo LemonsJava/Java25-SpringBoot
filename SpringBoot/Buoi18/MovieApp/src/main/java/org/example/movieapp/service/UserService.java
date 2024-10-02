@@ -1,0 +1,47 @@
+package org.example.movieapp.service;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.example.movieapp.entity.User;
+import org.example.movieapp.model.request.UpdatePasswordUserRequest;
+import org.example.movieapp.model.request.UpdateProfileUserRequest;
+import org.example.movieapp.repository.IUserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class UserService {
+    private final IUserRepository userRepository;
+    private final HttpSession session;
+    private final BCryptPasswordEncoder passwordEncoder;
+
+    public void updateProfile(UpdateProfileUserRequest request) {
+        User user = (User) session.getAttribute("currentUser");
+
+        if (request.getName() == null || request.getName().isEmpty()) {
+            throw new RuntimeException("Name cannot be empty");
+        }
+
+        user.setName(request.getName());
+
+        session.setAttribute("currentUser", user);
+        userRepository.save(user);
+    }
+
+    public void updatePassword(UpdatePasswordUserRequest request) {
+        User user = (User) session.getAttribute("currentUser");
+
+        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+            throw new RuntimeException("Old password is not correct");
+        }
+
+        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
+            throw new RuntimeException("Confirm password is not correct");
+        }
+
+        user.setPassword(passwordEncoder.encode(request.getConfirmPassword()));
+        session.setAttribute("currentUser", user);
+        userRepository.save(user);
+    }
+}

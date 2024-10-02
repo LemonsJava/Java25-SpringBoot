@@ -1,10 +1,8 @@
 package org.example.movieapp.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import org.example.movieapp.entity.Blog;
-import org.example.movieapp.entity.Episode;
-import org.example.movieapp.entity.Movie;
-import org.example.movieapp.entity.Review;
+import org.example.movieapp.entity.*;
 import org.example.movieapp.model.enums.MovieType;
 import org.example.movieapp.service.BlogService;
 import org.example.movieapp.service.EpisodeService;
@@ -87,12 +85,30 @@ public class WebController {
         Movie movieDetail = movieService.getMovieDetail(id, slug);
         List<Episode> listEpisodes = episodeService.getEpisodesByMovieId(movieDetail.getId());
         List<Movie> listMovieSuggestion = movieService.getListMovieSuggestion(movieDetail.getId(), movieDetail.getType());
-        List<Review> listReviews = reviewService.getReviewByMovieId(movieDetail.getId());
+        List<Review> listReviews = reviewService.getReviewByMovieId(id);
         model.addAttribute("movieDetail", movieDetail);
         model.addAttribute("listEpisodes", listEpisodes);
         model.addAttribute("listMovieSuggestion", listMovieSuggestion);
         model.addAttribute("listReviews", listReviews);
         return "/web/chi-tiet-phim";
+    }
+
+    @GetMapping("/xem-phim/phim/{id}/{slug}")
+    public String getMovieStreamDetailPage(Model model,
+                                           @PathVariable Integer id,
+                                           @PathVariable String slug,
+                                           @RequestParam String tap) {
+        Movie movieDetail = movieService.getMovieDetail(id, slug);
+        List<Episode> listEpisodes = episodeService.getEpisodesByMovieId(movieDetail.getId());
+        Episode episode = episodeService.getEpisodeByMovieIdAndStatusAndDisplayOrder(id, tap);
+        List<Movie> listMovieSuggestion = movieService.getListMovieSuggestion(movieDetail.getId(), movieDetail.getType());
+        List<Review> listReviews = reviewService.getReviewByMovieId(id);
+        model.addAttribute("movieDetail", movieDetail);
+        model.addAttribute("listEpisodes", listEpisodes);
+        model.addAttribute("listMovieSuggestion", listMovieSuggestion);
+        model.addAttribute("listReviews", listReviews);
+        model.addAttribute("episode", episode);
+        return "/web/xem-phim";
     }
 
     @GetMapping("/tin-tuc")
@@ -112,5 +128,14 @@ public class WebController {
         Blog blogDetail = blogService.getBlogDetail(id, slug);
         model.addAttribute("blogdetail", blogDetail);
         return "/web/chi-tiet-tin-tuc";
+    }
+
+    @GetMapping("/dang-nhap")
+    public String getLoginPage(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("currentUser");
+        if (user != null) {
+            return "redirect:/home";
+        }
+        return "/web/dang-nhap";
     }
 }

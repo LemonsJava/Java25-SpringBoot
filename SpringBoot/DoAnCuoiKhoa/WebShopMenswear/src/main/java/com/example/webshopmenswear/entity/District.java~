@@ -1,0 +1,24 @@
+package com.example.webshopmenswear.controller;
+
+import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@ToString
+@Builder
+
+@Entity
+@Table(name = "districts")
+
+public class District {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
+
+    
+}

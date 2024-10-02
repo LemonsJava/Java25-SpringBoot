@@ -14,4 +14,5 @@ public interface IReviewRepository extends JpaRepository<Review, Integer> {
 
     List<Review> findByMovieId(Integer movieId, Sort sort);
 
+
 }
