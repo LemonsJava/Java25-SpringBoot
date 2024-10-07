@@ -147,4 +147,12 @@ public class WebController {
         model.addAttribute("user", user);
         return "/web/thong-tin-ca-nhan";
     }
+
+    @GetMapping("/dang-ky-tai-khoan")
+    public String getRegisterPage(Model model) {
+        model.addAttribute("user", new User());
+        return "/web/dang-ky-tai-khoan";
+    }
+
+    
 }

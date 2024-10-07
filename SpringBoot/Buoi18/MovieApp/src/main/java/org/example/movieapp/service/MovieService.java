@@ -38,4 +38,13 @@ public class MovieService {
     public List<Movie> getListMovieSuggestion(Integer id, MovieType type) {
         return movieRepository.findTop6ByIdNotAndTypeAndStatus(id, type, true);
     }
+
+    public List<Movie> getAllMovies() {
+        return movieRepository.findAll(Sort.by("createdAt").descending());
+    }
+
+    public Movie getMovieById(Integer id) {
+        return movieRepository.findById(id).orElse(null);
+
+    }
 }

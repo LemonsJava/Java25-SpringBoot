@@ -36,3 +36,17 @@ btnUpdatePassword.addEventListener('click', () => {
             toastr.error("Cập nhật mật khẩu thất bại");
         })
 })
+
+
+const logoutEl = document.getElementById('logout');
+
+logoutEl.addEventListener('click', () => {
+    axios.post("/api/auth/logout")
+        .then(res => {
+            toastr.success("Đăng xuất thành công");
+            window.location.href = "/home";
+        })
+        .catch(err => {
+            console.log(err.response.data.message);
+        })
+})

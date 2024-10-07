@@ -313,7 +313,7 @@
 <script>
     const logoutEl = document.getElementById('logout');
     logoutEl.addEventListener('click', () => {
-        sessionStorage.removeItem('currentUser')
+        console.log("abc")
     })
 </script>
 </body>

@@ -1,0 +1,43 @@
+package org.example.movieapp.controller;
+
+import lombok.RequiredArgsConstructor;
+import org.example.movieapp.service.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping("/admin/movies")
+@RequiredArgsConstructor
+public class MovieController {
+    private final MovieService movieService;
+    private final CountryService countryService;
+    private final GenerService generService;
+    private final ActorService actorService;
+    private final DirectorService directorService;
+
+
+    @GetMapping
+    public String getHomePage(Model model) {
+        model.addAttribute("movies", movieService.getAllMovies());
+        return "/admin/movie/movie-index";
+    }
+
+    @GetMapping("/create")
+    public String getCreateMoviePage(Model model) {
+        model.addAttribute("countries", countryService.findAllCountries());
+        model.addAttribute("genres", generService.findAllGenres());
+        model.addAttribute("actors", actorService.findAllActors());
+        model.addAttribute("directors", directorService.findAllDirectors());
+        return "/admin/movie/movie-create";
+    }
+
+    @GetMapping("/{id}/detail")
+    public String getMovieDetailPage(@PathVariable Integer id, Model model) {
+        model.addAttribute("movie", movieService.getMovieById(id));
+        return "/admin/movie/movie-detail";
+    }
+
+}

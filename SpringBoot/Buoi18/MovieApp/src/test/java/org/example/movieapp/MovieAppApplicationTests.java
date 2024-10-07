@@ -395,19 +395,6 @@ class MovieAppApplicationTests {
     }
 
     @Test
-    void test_methods() {
-        List<Movie> movies = movieRepository.findAll();
-        System.out.println("Movie size: " + movies.size());
-
-        Movie movie1 = movieRepository.findById(1).orElse(null);
-        System.out.println("Movie1: " + movie1);
-
-//    Update
-//    movie1.setName("Spiderman");
-//    movieRepository.save(movie1);
-    }
-
-    @Test
     public void testMethodQuery() {
         List<Movie> movies = movieRepository.findByTypeAndStatus(MovieType.PHIM_BO, true);
         System.out.println("So luong phim: " + movies.size());

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @SpringBootTest
@@ -39,6 +40,7 @@ class WebShopMenswearApplicationTests {
 
     @Test
     void saveSubCategories() {
+        List<Category> categories = categoryRepository.findAll();
         Faker faker = new Faker();
         Slugify slugify = Slugify.builder().build();
         Random rd = new Random();
@@ -50,14 +52,13 @@ class WebShopMenswearApplicationTests {
             Category category = Category.builder()
                     .name(name)
                     .slug(slug)
-                    .parent(rd.)
+                    .parent(categories.get(rd.nextInt(categories.size())))
                     .createdAt(LocalDateTime.now())
                     .updatedAt(LocalDateTime.now())
                     .build();
-
             categoryRepository.save(category);
         }
 
-        }
+    }
 
 }
